@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ServiceCallout async="false" continueOnError="false" enabled="true" name="SC-DeleteNewKey">
+    <DisplayName>SC-DeleteNewKey</DisplayName>
+    <Properties/>
+    <Request clearPayload="true">
+        <Set>
+            <Verb>DELETE</Verb>
+            <Headers>
+                <Header name="authorization">{private.edge_authorization}</Header>
+            </Headers>
+        </Set>
+        <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+    </Request>
+    <Response>calloutResponse</Response>
+    <HTTPTargetConnection>
+        <Properties/>
+        <URL>https://api.enterprise.apigee.com/v1/organizations/{organization.name}/developers/{developer_id}/apps/{idpClientName}/keys/{newConsumerKey}</URL>
+    </HTTPTargetConnection>
+</ServiceCallout>

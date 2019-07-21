@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="EV-GetDeveloper">
+    <DisplayName>EV-GetDeveloper</DisplayName>
+    <Properties/>
+    <URIPath>
+        <Pattern ignoreCase="true">/{developer_id}/apps</Pattern>
+    </URIPath>
+    <FormParam name="api_products">
+        <Pattern>{api_products}</Pattern>
+    </FormParam>
+    <FormParam name="client_name">
+        <Pattern>{client_name}</Pattern>
+    </FormParam>
+    <FormParam name="redirect_uri">
+        <Pattern>{redirect_uri}</Pattern>
+    </FormParam>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</ExtractVariables>

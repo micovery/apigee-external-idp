@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OAuthV2 async="false" continueOnError="false" enabled="true" name="OA-GenerateAccessTokenPass">
+    <DisplayName>OA-GenerateAccessTokenPass</DisplayName>
+    <Operation>GenerateAccessToken</Operation>
+    <ExpiresIn ref="idpAccessTokenExpiresIn">3600000</ExpiresIn>
+    <RefreshTokenExpiresIn ref="idpRefreshTokenExpiresIn">3600000</RefreshTokenExpiresIn>
+    <SupportedGrantTypes>
+        <GrantType>password</GrantType>
+    </SupportedGrantTypes>
+    <Scope>idpScope</Scope>
+    <ExternalAuthorization>true</ExternalAuthorization>
+    <ExternalAccessToken>idpAccessToken</ExternalAccessToken>
+    <StoreToken>true</StoreToken>
+    <GenerateResponse/>
+</OAuthV2>

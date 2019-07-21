@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="EV-ExtractGrantType">
+    <DisplayName>EV-ExtractGrantType</DisplayName>
+    <Header name="content-type">
+        <Pattern>{content_type}</Pattern>
+    </Header>
+    <QueryParam name="grant_type">
+        <Pattern>{grant_type}</Pattern>
+    </QueryParam>
+    <FormParam name="grant_type">
+        <Pattern>{grant_type}</Pattern>
+    </FormParam>
+    <QueryParam name="response_type">
+        <Pattern>{response_type}</Pattern>
+    </QueryParam>
+    <FormParam name="response_type">
+        <Pattern>{response_type}</Pattern>
+    </FormParam>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <Source clearPayload="false">request</Source>
+</ExtractVariables>

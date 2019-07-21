@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OAuthV2 name="OA-GenerateAccessTokenAC">
+    <Operation>GenerateAccessToken</Operation>
+    <DisplayName>OA-GenerateAccessTokenAC</DisplayName>
+    <ExpiresIn ref="idpAccessTokenExpiresIn">3600000</ExpiresIn>
+    <RefreshTokenExpiresIn ref="idpRefreshTokenExpiresIn">3600000</RefreshTokenExpiresIn>
+    <SupportedGrantTypes>
+        <GrantType>authorization_code</GrantType>
+    </SupportedGrantTypes>
+    <Code>original_auth_code</Code>
+    <Scope>original_scope</Scope>
+    <ExternalAuthorization>true</ExternalAuthorization>
+    <ExternalAccessToken>idpAccessToken</ExternalAccessToken>
+    <StoreToken>true</StoreToken>
+    <GenerateResponse/>
+</OAuthV2>

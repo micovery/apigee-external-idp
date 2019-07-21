@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<KeyValueMapOperations async="false" continueOnError="false" enabled="true" name="KVM-GetIdpMetadata" mapIdentifier="idp-metadata">
+    <DisplayName>KVM-GetIdpMetadata</DisplayName>
+    <Properties/>
+    <ExclusiveCache>false</ExclusiveCache>
+    <ExpiryTimeInSecs>300</ExpiryTimeInSecs>
+    <Get assignTo="idp-token-url" index="1">
+        <Key>
+            <Parameter>idp-token-url</Parameter>
+        </Key>
+    </Get>
+    <Get assignTo="idp-auth-url" index="1">
+        <Key>
+            <Parameter>idp-auth-url</Parameter>
+        </Key>
+    </Get>
+    <Get assignTo="idp-registration-url" index="1">
+        <Key>
+            <Parameter>idp-registration-url</Parameter>
+        </Key>
+    </Get>
+    <Get assignTo="idp-registration-token-type" index="1">
+        <Key>
+            <Parameter>idp-registration-token-type</Parameter>
+        </Key>
+    </Get>
+    <Get assignTo="idp-registration-auth" index="1">
+        <Key>
+            <Parameter>idp-registration-auth</Parameter>
+        </Key>
+    </Get>
+    <Scope>environment</Scope>
+</KeyValueMapOperations>

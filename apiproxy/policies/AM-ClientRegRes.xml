@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AM-ClientRegRes">
+    <DisplayName>AM-ClientRegRes</DisplayName>
+    <Properties/>
+    <Copy source="calloutResponse">
+        <Headers/>
+        <Payload>true</Payload>
+        <StatusCode>true</StatusCode>
+        <ReasonPhrase>true</ReasonPhrase>
+    </Copy>
+    <AssignTo createNew="new" transport="http" type="response"/>
+</AssignMessage>

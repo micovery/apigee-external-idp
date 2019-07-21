@@ -1,0 +1,1 @@
+context.setVariable('request-url', context.getVariable('idp-token-url'));

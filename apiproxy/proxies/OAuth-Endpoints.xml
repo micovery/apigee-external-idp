@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="OAuth-Endpoints">
+    <Description/>
+    <FaultRules>
+        <FaultRule name="SC-Error">
+            <Condition>(servicecallout.SC-IdpToken.failed is true) or (servicecallout.SC-EdgeCreateApp.failed is true) or (servicecallout.SC-DeleteNewKey.failed is true) or (servicecallout.SC-IdpClientRegistration.failed is true) or (servicecallout.SC-SyncEdgeCreds.failed is true) or (servicecallout.SC-SetAPIProds.failed is true)</Condition>
+            <Step>
+                <Name>RF-CalloutError</Name>
+            </Step>
+        </FaultRule>
+    </FaultRules>
+    <DefaultFaultRule name="default-fault">
+        <Step>
+            <Name>AM-AddCORS</Name>
+        </Step>
+    </DefaultFaultRule>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>EV-ExtractGrantType</Name>
+            </Step>
+            <Step>
+                <Name>KVM-GetIdpMetadata</Name>
+            </Step>
+        </Request>
+        <Response/>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response>
+            <Step>
+                <Name>AM-AddCORS</Name>
+            </Step>
+        </Response>
+    </PostFlow>
+    <Flows>
+        <Flow name="CORS">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RF-CORSFault</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix ~~ ".*") and (request.verb = "OPTIONS")</Condition>
+        </Flow>
+        <Flow name="GET /authorize (code)">
+            <Condition>(proxy.pathsuffix MatchesPath "/authorize") and (request.verb = "GET") and (response_type = "code") </Condition>
+            <Description/>
+            <Request/>
+            <Response>
+                <Step>
+                    <Name>JS-ReformatScopes</Name>
+                </Step>
+                <Step>
+                    <Name>OA-GenerateAuthCode</Name>
+                </Step>
+                <Step>
+                    <Condition>(oauthV2.OA-GenerateAuthCode.failed is true) </Condition>
+                    <Name>RF-OAuth</Name>
+                </Step>
+                <Step>
+                    <Name>JS-DoRedirect</Name>
+                </Step>
+                <Step>
+                    <Name>PC-SaveAuthCode</Name>
+                </Step>
+            </Response>
+        </Flow>
+        <Flow name="POST /token (authorization_code)">
+            <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.verb = "POST") and (grant_type = "authorization_code") and (content_type = "application/x-www-form-urlencoded") </Condition>
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>VAK-VerifyAPIKey</Name>
+                </Step>
+                <Step>
+                    <Condition>verifyapikey.VAK-VerifyAPIKey.client_secret != request.formparam.client_secret </Condition>
+                    <Name>RF-BadRequest</Name>
+                </Step>
+                <Step>
+                    <Name>LC-GetAuthCode</Name>
+                </Step>
+                <Step>
+                    <Name>JS-ProcessAuthCodeCache</Name>
+                </Step>
+                <Step>
+                    <Name>JS-SetIdpTokenUrl</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>JS-ProcessTokenResponse</Name>
+                </Step>
+                <Step>
+                    <Name>OA-GenerateAccessTokenAC</Name>
+                </Step>
+                <Step>
+                    <Name>JS-ModifyOAuthResponse</Name>
+                </Step>
+            </Response>
+        </Flow>
+        <Flow name="POST /token (password)">
+            <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.verb = "POST") and (grant_type = "password") and (content_type = "application/x-www-form-urlencoded")</Condition>
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>VerifyAPIKey</Name>
+                </Step>
+                <Step>
+                    <Name>JS-SetIdpTokenUrl</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>JS-ProcessTokenResponse</Name>
+                </Step>
+                <Step>
+                    <Name>OA-GenerateAccessTokenPass</Name>
+                </Step>
+                <Step>
+                    <Name>JS-ModifyOAuthResponse</Name>
+                </Step>
+            </Response>
+        </Flow>
+        <Flow name="BadGrantType">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RF-BadGrantType</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>!(grant_type ~~ "^(client_credentials|authorization_code)$")</Condition>
+        </Flow>
+        <Flow name="BadMethod">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RF-BadMethod</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>!(request.verb ~~ "^(POST|GET)$")</Condition>
+        </Flow>
+        <Flow name="BadPath">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RF-BadPath</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>!(proxy.pathsuffix ~~ "^\/(token|auth)$")</Condition>
+        </Flow>
+        <Flow name="BadMediaType">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RF-BadMediaType</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(request.verb = "POST") and !(content_type = "application/x-www-form-urlencoded")</Condition>
+        </Flow>
+        <Flow name="BadRequest">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RF-BadRequest</Name>
+                </Step>
+            </Request>
+            <Response/>
+        </Flow>
+    </Flows>
+    <HTTPProxyConnection>
+        <BasePath>/v1/idp/oauth</BasePath>
+        <Properties/>
+        <VirtualHost>default</VirtualHost>
+        <VirtualHost>secure</VirtualHost>
+    </HTTPProxyConnection>
+    <RouteRule name="IdpRoute">
+        <Condition> (grant_type = "authorization_code")  or  (grant_type = "password") </Condition>
+        <TargetEndpoint>IdpEndpoint</TargetEndpoint>
+    </RouteRule>
+    <RouteRule name="noroute"/>
+</ProxyEndpoint>

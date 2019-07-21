@@ -1,0 +1,23 @@
+[
+  {
+    "entry": [
+      {
+        "name": "idp-auth-url",
+        "value": "https://dev-548285.okta.com/oauth2/default/v1/authorize"
+      },
+      {
+        "name": "idp-registration-auth",
+        "value": "SSWS 00zNVmfgskxR55IY6LNWSgIlGmYJpqANqNtlc69Cc0"
+      },
+      {
+        "name": "idp-registration-url",
+        "value": "https://dev-548285.okta.com/oauth2/v1/clients"
+      },
+      {
+        "name": "idp-token-url",
+        "value": "https://dev-548285.okta.com/oauth2/default/v1/token"
+      }
+    ],
+    "name": "idp-metadata"
+  }
+]

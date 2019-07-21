@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="Dynamic-Client-Registration">
+    <Description>This was added during a demo</Description>
+    <FaultRules>
+        <FaultRule name="SC-Error">
+            <Condition>(servicecallout.SC-IdpToken.failed is true) or (servicecallout.SC-EdgeCreateApp.failed is true) or (servicecallout.SC-DeleteNewKey.failed is true) or (servicecallout.SC-IdpClientRegistration.failed is true) or (servicecallout.SC-SyncEdgeCreds.failed is true) or (servicecallout.SC-SetAPIProds.failed is true)</Condition>
+            <Step>
+                <Name>RF-CalloutError</Name>
+            </Step>
+        </FaultRule>
+    </FaultRules>
+    <DefaultFaultRule name="default-fault">
+        <Step>
+            <Name>AM-AddCORS</Name>
+        </Step>
+    </DefaultFaultRule>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>EV-ExtractGrantType</Name>
+            </Step>
+            <Step>
+                <Name>KVM-GetIdpMetadata</Name>
+            </Step>
+            <Step>
+                <Name>KVM-GetIdpCreds</Name>
+            </Step>
+        </Request>
+        <Response/>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response/>
+    </PostFlow>
+    <Flows>
+        <Flow name="POST /*/apps">
+            <Description>Dynamic Client Registration</Description>
+            <Request>
+                <Step>
+                    <Name>EV-GetDeveloper</Name>
+                </Step>
+                <Step>
+                    <Name>JS-SetRegistrationUrl</Name>
+                </Step>
+                <Step>
+                    <Name>AM-SetRegistrationAuth</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>JS-ProcessRegistrationResponse</Name>
+                </Step>
+                <Step>
+                    <Name>SC-EdgeCreateApp</Name>
+                </Step>
+                <Step>
+                    <Name>EV-GetNewCred</Name>
+                </Step>
+                <Step>
+                    <Name>SC-DeleteNewKey</Name>
+                </Step>
+                <Step>
+                    <Name>SC-SyncEdgeCreds</Name>
+                </Step>
+                <Step>
+                    <Name>SC-SetAPIProds</Name>
+                </Step>
+                <Step>
+                    <Name>AM-ClientRegRes</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/*/apps") and (request.verb = "POST")</Condition>
+        </Flow>
+        <Flow name="BadMethod">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RF-BadMethod</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>!(request.verb ~~ "^(POST)$")</Condition>
+        </Flow>
+        <Flow name="BadMediaType">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RF-BadMediaType</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(request.verb = "POST") and !(content_type = "application/x-www-form-urlencoded")</Condition>
+        </Flow>
+        <Flow name="BadRequest">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RF-BadRequest</Name>
+                </Step>
+            </Request>
+            <Response/>
+        </Flow>
+    </Flows>
+    <HTTPProxyConnection>
+        <BasePath>/v1/idp/developers</BasePath>
+        <Properties/>
+        <VirtualHost>default</VirtualHost>
+        <VirtualHost>secure</VirtualHost>
+    </HTTPProxyConnection>
+    <RouteRule name="IdpRoute">
+        <TargetEndpoint>IdpEndpoint</TargetEndpoint>
+    </RouteRule>
+</ProxyEndpoint>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RF-OAuth">
+    <DisplayName>RF-OAuth</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <StatusCode>400</StatusCode>
+            <Payload>{response.content}</Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>

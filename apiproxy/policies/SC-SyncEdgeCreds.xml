@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ServiceCallout async="false" continueOnError="false" enabled="true" name="SC-SyncEdgeCreds">
+    <DisplayName>SC-SyncEdgeCreds</DisplayName>
+    <Properties/>
+    <Request clearPayload="true">
+        <Set>
+            <Headers>
+                <Header name="content-type">application/json</Header>
+                <Header name="accept">application/json</Header>
+                <Header name="authorization">{private.edge_authorization}</Header>
+            </Headers>
+            <Verb>POST</Verb>
+            <Payload>
+{
+  "consumerKey": "{idpClientId}",
+  "consumerSecret": "{idpClientSecret}"
+}  
+            </Payload>
+        </Set>
+        <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+    </Request>
+    <Response>calloutResponse</Response>
+    <HTTPTargetConnection>
+        <Properties/>
+        <URL>https://api.enterprise.apigee.com/v1/organizations/{organization.name}/developers/{developer_id}/apps/{idpClientName}/keys/create</URL>
+    </HTTPTargetConnection>
+</ServiceCallout>

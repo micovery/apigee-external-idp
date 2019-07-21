@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RF-CalloutError">
+    <DisplayName>RF-CalloutError</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <StatusCode>{calloutResponse.status.code}</StatusCode>
+            <Payload>{calloutResponse.content}</Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>

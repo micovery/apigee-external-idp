@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="EV-GetNewCred">
+    <DisplayName>EV-GetNewCred</DisplayName>
+    <Properties/>
+    <JSONPayload>
+        <Variable name="newConsumerKey">
+            <JSONPath>$.credentials[0].consumerKey</JSONPath>
+        </Variable>
+    </JSONPayload>
+    <Source clearPayload="false">calloutResponse.content</Source>
+</ExtractVariables>

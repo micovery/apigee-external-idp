@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<LookupCache async="false" continueOnError="false" enabled="true" name="LC-GetAuthCode">
+    <DisplayName>LC-GetAuthCode</DisplayName>
+    <Properties/>
+    <CacheKey>
+        <KeyFragment ref="request.formparam.client_id"/>
+        <KeyFragment ref="request.formparam.state"/>
+    </CacheKey>
+    <CacheResource>OAuthAuthCodeCache</CacheResource>
+    <Scope>Exclusive</Scope>
+    <AssignTo>authCodeCache</AssignTo>
+</LookupCache>
