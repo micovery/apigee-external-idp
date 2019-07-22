@@ -4,7 +4,7 @@
     <ConfigurationVersion majorVersion="4" minorVersion="0"/>
     <CreatedAt>1558606057043</CreatedAt>
     <CreatedBy>defaultUser</CreatedBy>
-    <Description>Created by @username@ from git revision: @GIT_INFO@</Description>
+    <Description>Created by @username@ from @GIT_INFO@</Description>
     <DisplayName>graphql-oauth</DisplayName>
     <LastModifiedAt>1558609887607</LastModifiedAt>
     <LastModifiedBy>@username@</LastModifiedBy>
