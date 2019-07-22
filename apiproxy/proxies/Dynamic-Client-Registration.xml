@@ -102,7 +102,7 @@
         </Flow>
     </Flows>
     <HTTPProxyConnection>
-        <BasePath>/v1/idp/developers</BasePath>
+        <BasePath>/@prefix@/idp/developers</BasePath>
         <Properties/>
         <VirtualHost>default</VirtualHost>
         <VirtualHost>secure</VirtualHost>
