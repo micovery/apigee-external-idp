@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh "mvn -ntp install -Ptest -Dorg=${params.APIGEE_ORG} -Denv=${params.APIGEE_ENV} -Dbearer=${params.beater}"
+                sh "mvn -ntp install -Ptest -Dorg=${params.APIGEE_ORG} -Denv=${params.APIGEE_ENV} -Dbearer=${params.APIGEE_BEARER}"
             }
         }
     }
