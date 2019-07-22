@@ -1,6 +1,6 @@
 pipeline {
 
-    properties([
+    options([
       parameters([
         string(defaultValue: '', description: '', name: 'APIGEE_USER', trim: false),
         password(defaultValue: '', description: '', name: 'APIGEE_PASSWORD'),
