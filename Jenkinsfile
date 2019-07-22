@@ -13,9 +13,9 @@ pipeline {
     }
 
     stages {
-        stage('build-master') {
+        stage('build') {
             steps {
-                sh "mvn -ntp install -Ptest -Dorg=${params.APIGEE_ORG} -Denv=${params.APIGEE_ENV} -Dusername=${params.APIGEE_USER} -Dbearer=${params.APIGEE_BEARER} -Dprefix=${params.PREFIX}"
+                sh "mvn -ntp install -Ptest -Dorg=${params.APIGEE_ORG} -Denv=${params.APIGEE_ENV} -Dusername=${params.APIGEE_USER} -Dbearer=${params.APIGEE_BEARER} -Dprefix=${params.PREFIX} -DGIT_INFO=${env.GIT_BRANCH}/${env.GIT_COMMIT}"
             }
         }
     }
