@@ -162,6 +162,7 @@
                 <apigee.config.options>sync</apigee.config.options>
                 <apigee.config.dir>${basedir}/target/resources/edge</apigee.config.dir>
                 <apigee.options>override</apigee.options>
+                <apigee.bearer>${bearer}</apigee.bearer>
                 <apigee.authtype>oauth</apigee.authtype>
             </properties>
         </profile>
