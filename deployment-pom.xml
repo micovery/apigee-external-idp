@@ -157,12 +157,13 @@
                 <apigee.apiversion>v1</apigee.apiversion>
                 <apigee.org>${org}</apigee.org>
                 <apigee.env>${env}</apigee.env>
-                <apigee.username>${username}</apigee.username>
-                <apigee.password>${password}</apigee.password>
                 <apigee.config.options>sync</apigee.config.options>
                 <apigee.config.dir>${basedir}/target/resources/edge</apigee.config.dir>
                 <apigee.options>override</apigee.options>
+                <apigee.username>${username}</apigee.username>
+                <apigee.password>${password}</apigee.password>
                 <apigee.bearer>${bearer}</apigee.bearer>
+                <apigee.tokenurl>https://demo1337-keycloak.login.apigee.com/oauth/token</apigee.tokenurl>
                 <apigee.authtype>oauth</apigee.authtype>
             </properties>
         </profile>
