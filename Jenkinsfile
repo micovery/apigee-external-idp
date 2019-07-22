@@ -1,13 +1,15 @@
 pipeline {
-    // agent { docker { image 'maven:3.3.3' } }
+
+    properties([
+      parameters([
+        string(defaultValue: '', description: '', name: 'APIGEE_USER', trim: false),
+        password(defaultValue: '', description: '', name: 'APIGEE_PASSWORD'),
+        string(defaultValue: '', description: '', name: 'APIGEE_ORG', trim: false),
+        string(defaultValue: '', description: '', name: 'APIGEE_ENV', trim: false)])]
+    )
 
     agent {
-      dockerfile {
-        filename 'Dockerfile'
-        dir 'build'
-        label 'runner'
-        args '-v /tmp:/tmp'
-      }
+      dockerfile true
     }
 
     stages {
