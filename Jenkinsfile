@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh "mvn install -Ptest -Dorg=${params.APIGEE_ORG} -Denv=${params.APIGEE_ENV} -Dusername=${params.APIGEE_USER} -Dpassword=${params.password}"
+                sh "mvn -ntp install -Ptest -Dorg=${params.APIGEE_ORG} -Denv=${params.APIGEE_ENV} -Dusername=${params.APIGEE_USER} -Dpassword=${params.APIGEE_PASSWORD}"
             }
         }
     }
