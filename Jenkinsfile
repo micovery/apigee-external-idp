@@ -11,7 +11,19 @@ pipeline {
     }
 
     stages {
-        stage('build') {
+        stage('build-master') {
+            when{
+               branch 'master'
+            }
+            steps {
+                sh "mvn -ntp install -Ptest -Dorg=${params.APIGEE_ORG} -Denv=${params.APIGEE_ENV} -Dusername=${params.APIGEE_USER} -Dbearer=${params.APIGEE_BEARER}"
+            }
+        }
+
+        stage('build-feature') {
+            when{
+               branch 'feature/*'
+            }
             steps {
                 sh "mvn -ntp install -Ptest -Dorg=${params.APIGEE_ORG} -Denv=${params.APIGEE_ENV} -Dusername=${params.APIGEE_USER} -Dbearer=${params.APIGEE_BEARER}"
             }
