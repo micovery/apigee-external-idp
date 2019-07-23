@@ -1,7 +1,7 @@
 pipeline {
     parameters {
         string(defaultValue: 'miguelmendoza@google.com', description: '', name: 'APIGEE_USER', trim: false)
-        password(defaultValue: '', description: '', name: 'APIGEE_PASSWORD', trim: false)
+        password(defaultValue: '', description: '', name: 'APIGEE_PASSWORD')
         string(defaultValue: 'demo1337', description: '', name: 'APIGEE_ORG', trim: false)
         string(defaultValue: 'test', description: '', name: 'APIGEE_ENV', trim: false)
 
