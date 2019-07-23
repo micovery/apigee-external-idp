@@ -174,7 +174,7 @@
         </Flow>
     </Flows>
     <HTTPProxyConnection>
-        <BasePath>/@prefix@/idp/oauth</BasePath>
+        <BasePath>@prefix@/v1/idp/oauth</BasePath>
         <Properties/>
         <VirtualHost>default</VirtualHost>
         <VirtualHost>secure</VirtualHost>

@@ -61,7 +61,6 @@
 
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>io.apigee.build-tools.enterprise4g</groupId>
                 <artifactId>apigee-edge-maven-plugin</artifactId>
@@ -156,10 +155,9 @@
                 <apigee.options>override</apigee.options>
                 <apigee.username>${username}</apigee.username>
                 <apigee.password>${password}</apigee.password>
-                <apigee.bearer>${bearer}</apigee.bearer>
-                <apigee.tokenurl>https://demo1337-keycloak.login.apigee.com/oauth/token</apigee.tokenurl>
-                <apigee.authtype>oauth</apigee.authtype>
-                <prefix>v1</prefix>
+<!--                <apigee.bearer>${bearer}</apigee.bearer>-->
+<!--                <apigee.tokenurl>https://demo1337-keycloak.login.apigee.com/oauth/token</apigee.tokenurl>-->
+<!--                <apigee.authtype>oauth</apigee.authtype>-->
             </properties>
         </profile>
     </profiles>
