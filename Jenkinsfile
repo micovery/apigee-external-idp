@@ -15,7 +15,10 @@ pipeline {
         stage('build') {
             steps {
                 sh "mvn -ntp install -Ptest -Dorg=${params.APIGEE_ORG} -Denv=${params.APIGEE_ENV} -Dusername=${params.APIGEE_USER} -Dpassword=${params.APIGEE_PASSWORD} -DGIT_INFO=${env.GIT_BRANCH}/${env.GIT_COMMIT} -Dprefix=${env.GIT_COMMIT} -Dproxy_name_prefix=${env.GIT_COMMIT}"
+
+                sh "apigeelint -s apiproxy -f table.js"
             }
+
         }
     }
 }

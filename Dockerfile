@@ -7,4 +7,7 @@ RUN apt-get update $quiet &&\
     apt-get update $quiet  &&\
     apt-get install $quiet nodejs
 
+RUN npm install -g apigeelint &&\
+    apigeelint -V
+
 ENTRYPOINT ["bash", "-c"]
