@@ -4,7 +4,7 @@
     <ConfigurationVersion majorVersion="4" minorVersion="0"/>
     <CreatedAt>1558606057043</CreatedAt>
     <CreatedBy>defaultUser</CreatedBy>
-    <Description>Created by @BUILD_USER@ from Git branch '@GIT_BRANCH@', Git commit '@GIT_COMMIT@'</Description>
+    <Description>Created by @BUILD_USER@ from '@GIT_BRANCH@' branch, commit '@GIT_COMMIT@'</Description>
     <DisplayName>graphql-oauth</DisplayName>
     <LastModifiedAt>1558609887607</LastModifiedAt>
     <LastModifiedBy>@username@</LastModifiedBy>
