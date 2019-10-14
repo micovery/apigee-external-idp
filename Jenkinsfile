@@ -13,10 +13,11 @@ pipeline {
     }
 
     stages {
-        stage('setup-generic') {
+        stage('setup') {
             steps {
                 script {
                     env.GIT_SHORT_COMMIT =  env.GIT_COMMIT[-7..-1]
+
                     env.BUILD_USER = wrap([$class: 'BuildUser']) {
                         if (env.BUILD_USER_ID == null) {
                             return 'trigger'
@@ -28,29 +29,16 @@ pipeline {
                         "branch: " + env.GIT_BRANCH  + ", " +
                         "commit: " + env.GIT_SHORT_COMMIT + ", " +
                         "url: " + env.BUILD_URL;
+
+                    if (env.GIT_BRANCH == "master") {
+                        env.APIGEE_PREFIX = ""
+                    } else {
+                        env.APIGEE_PREFIX = env.GIT_BRANCH;
+                    }
                 }
             }
         }
-        stage('setup-feature/bug') {
-            when {
-                anyOf { branch 'feature/*'; branch 'bug/*' }
-            }
-            steps {
-                script {
-                    env.APIGEE_PREFIX = env.GIT_BRANCH
-                }
-            }
-        }
-        stage('setup-master') {
-            when {
-                branch "master"
-            }
-            steps {
-                script {
-                    env.APIGEE_PREFIX = ""
-                }
-            }
-        }
+
         stage('build') {
             steps {
                 sh "mvn -ntp install -Ptest -Dorg=${params.APIGEE_ORG} -Denv=${params.APIGEE_ENV} -Dusername=${APIGEE_CREDS_USR} -Dpassword=${APIGEE_CREDS_PSW} -Dprefix=${env.APIGEE_PREFIX} -DAPIGEE_BUILD_DESC='${env.APIGEE_BUILD_DESC}'"
