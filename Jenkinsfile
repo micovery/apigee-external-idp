@@ -13,13 +13,37 @@ pipeline {
     }
 
     stages {
-        stage('build') {
+        stage('setup-generic') {
             steps {
                 script {
                     env.GIT_SHORT_COMMIT =  env.GIT_COMMIT[-7..-1]
-                    env.BUILD_USER = wrap([$class: 'BuildUser']) { return env.BUILD_USER_ID}
+                    env.BUILD_USER = wrap([$class: 'BuildUser']) { return env.BUILD_USER_ID }
                 }
-                sh "mvn -ntp install -Ptest -Dorg=${params.APIGEE_ORG} -Denv=${params.APIGEE_ENV} -Dusername=${APIGEE_CREDS_USR} -Dpassword=${APIGEE_CREDS_PSW} -DGIT_BRANCH=${env.GIT_BRANCH} -DBUILD_USER=${env.BUILD_USER} -DGIT_COMMIT=${env.GIT_COMMIT} -Dprefix=${env.GIT_SHORT_COMMIT}"
+            }
+        }
+        stage('setup-feature/bug') {
+            when {
+                anyOf { branch 'feature/*'; branch 'bug/*' }
+            }
+            steps {
+                script {
+                    env.APIGEE_PREFIX = env.GIT_BRANCH
+                }
+            }
+        }
+        stage('setup-master') {
+            when {
+                branch "master"
+            }
+            steps {
+                script {
+                    env.APIGEE_PREFIX = ""
+                }
+            }
+        }
+        stage('build') {
+            steps {
+                sh "mvn -ntp install -Ptest -Dorg=${params.APIGEE_ORG} -Denv=${params.APIGEE_ENV} -Dusername=${APIGEE_CREDS_USR} -Dpassword=${APIGEE_CREDS_PSW} -DGIT_BRANCH=${env.GIT_BRANCH} -DBUILD_USER=${env.BUILD_USER} -DGIT_COMMIT=${env.GIT_COMMIT} -Dprefix=${env.APIGEE_PREFIX}"
             }
         }
     }
