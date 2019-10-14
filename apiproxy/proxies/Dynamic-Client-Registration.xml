@@ -104,7 +104,6 @@
     <HTTPProxyConnection>
         <BasePath>@basepath_prefix@/v1/idp/developers</BasePath>
         <Properties/>
-        <VirtualHost>default</VirtualHost>
         <VirtualHost>secure</VirtualHost>
     </HTTPProxyConnection>
     <RouteRule name="IdpRoute">
