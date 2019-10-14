@@ -23,10 +23,40 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>setup-dynamic-properties</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <exportAntProperties>true</exportAntProperties>
+                            <target>
+                                <condition property="basepath_prefix" value="/${prefix}" else="">
+                                    <not><equals arg1="${prefix}" arg2="" trim="true" /></not>
+                                </condition>
+
+                                <condition property="name_prefix" value="${prefix}-" else="">
+                                    <not><equals arg1="${prefix}" arg2="" trim="true" /></not>
+                                </condition>
+
+                                <echo message="prefix: ${prefix}"/>
+                                <echo message="basepath_prefix: ${basepath_prefix}"/>
+                                <echo message="name_prefix: ${name_prefix}"/>
+                            </target>
+                        </configuration>
+
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.1.0</version>
                 <executions>
-
                     <execution>
                         <id>copy-resources</id>
                         <phase>prepare-package</phase>
@@ -52,13 +82,11 @@
                                         <exclude>**/node_modules/**</exclude>
                                         <exclude>**/generated/**</exclude>
                                     </excludes>
-
                                     <filtering>true</filtering>
                                 </resource>
                             </resources>
                         </configuration>
                     </execution>
-
                 </executions>
             </plugin>
             <plugin>
