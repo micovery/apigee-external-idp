@@ -18,7 +18,7 @@ pipeline {
                 script {
                     env.GIT_SHORT_COMMIT =  env.GIT_COMMIT[-7..-1]
                     env.BUILD_USER = wrap([$class: 'BuildUser']) { return env.BUILD_USER_ID }
-                    env.APIGEE_BUILD_DESC = "Built by " + env.BUILD_USER + " from "
+                    env.APIGEE_BUILD_DESC = "Built by " + env.BUILD_USER + " from " +
                         "branch: " + env.GIT_BRANCH  + ", " +
                         "commit: " + env.GIT_SHORT_COMMIT + ", " +
                         "url: " + env.BUILD_URL;
