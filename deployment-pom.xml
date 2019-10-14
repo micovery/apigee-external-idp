@@ -22,34 +22,48 @@
 
     <build>
         <plugins>
+
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
+                <groupId>org.codehaus.gmaven</groupId>
+                <artifactId>groovy-maven-plugin</artifactId>
+                <version>2.1</version>
                 <executions>
+
+
                     <execution>
-                        <id>setup-dynamic-properties</id>
                         <phase>prepare-package</phase>
                         <goals>
-                            <goal>run</goal>
+                            <goal>execute</goal>
                         </goals>
                         <configuration>
-                            <exportAntProperties>true</exportAntProperties>
-                            <target>
-                                <condition property="basepath_prefix" value="/${prefix}" else="">
-                                    <not><equals arg1="${prefix}" arg2="" trim="true" /></not>
-                                </condition>
+                            <properties>
 
-                                <condition property="name_prefix" value="${prefix}-" else="">
-                                    <not><equals arg1="${prefix}" arg2="" trim="true" /></not>
-                                </condition>
+                            </properties>
+                            <source>
+                                def prefix = session.userProperties['prefix'];
+                                def basepath_prefix;
+                                def name_prefix;
 
-                                <echo message="prefix: ${prefix}"/>
-                                <echo message="basepath_prefix: ${basepath_prefix}"/>
-                                <echo message="name_prefix: ${name_prefix}"/>
-                            </target>
+                                if (prefix != null) {
+                                    prefix = prefix.replaceAll('/','-');
+                                    basepath_prefix = "/" + prefix;
+                                    name_prefix = prefix + "-"
+                                } else {
+                                    basepath_prefix = "";
+                                    name_prefix = ""
+                                }
+
+                                project.properties.basepath_prefix = basepath_prefix;
+                                project.properties.name_prefix = name_prefix;
+
+                                println("*****************************************")
+                                println("\tprefix: " + prefix);
+                                println("\tbasepath_prefix: " + basepath_prefix);
+                                println("\tname_prefix: " + name_prefix);
+                                println("*****************************************")
+
+                            </source>
                         </configuration>
-
                     </execution>
                 </executions>
             </plugin>
