@@ -17,7 +17,13 @@ pipeline {
             steps {
                 script {
                     env.GIT_SHORT_COMMIT =  env.GIT_COMMIT[-7..-1]
-                    env.BUILD_USER = wrap([$class: 'BuildUser']) { return env.BUILD_USER_ID }
+                    env.BUILD_USER = wrap([$class: 'BuildUser']) {
+                        if (env.BUILD_USER_ID == null) {
+                            return 'trigger'
+                        }
+                        return env.BUILD_USER_ID
+                    }
+
                     env.APIGEE_BUILD_DESC = "Built by " + env.BUILD_USER + " from " +
                         "branch: " + env.GIT_BRANCH  + ", " +
                         "commit: " + env.GIT_SHORT_COMMIT + ", " +
