@@ -44,13 +44,14 @@
                                 def basepath_prefix;
                                 def name_prefix;
 
-                                if (prefix != null) {
-                                    prefix = prefix.replaceAll('/','-');
+                                if (!prefix?.trim()) {
+                                    prefix = ""
+                                    basepath_prefix = ""
+                                    name_prefix = ""
+                                } else {
+                                    prefix = prefix.replaceAll('/', '-');
                                     basepath_prefix = "/" + prefix;
                                     name_prefix = prefix + "-"
-                                } else {
-                                    basepath_prefix = "";
-                                    name_prefix = ""
                                 }
 
                                 project.properties.basepath_prefix = basepath_prefix;
