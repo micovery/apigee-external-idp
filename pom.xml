@@ -10,6 +10,6 @@
 	<groupId>apigee</groupId>
 	<artifactId>external-idp-demo</artifactId>
 	<version>1.0</version>
-	<name>${name_prefix}-external-idp-demo</name>
+	<name>${name_prefix}external-idp-demo</name>
 	<packaging>pom</packaging>
 </project>
