@@ -44,6 +44,24 @@ pipeline {
                 sh "mvn -ntp install -Ptest -Dorg=${params.APIGEE_ORG} -Denv=${params.APIGEE_ENV} -Dusername=${APIGEE_CREDS_USR} -Dpassword=${APIGEE_CREDS_PSW} -Dprefix=${env.APIGEE_PREFIX} -DAPIGEE_BUILD_DESC='${env.APIGEE_BUILD_DESC}'"
             }
         }
+
+        stage('test') {
+            steps {
+                dir('tests') {
+                    sh "npm install"
+                    sh "npm run tests"
+                }
+            }
+        }
+
+        post {
+            always{
+                xunit (
+                    thresholds: [ skipped(failureThreshold: '0'), failed(failureThreshold: '0') ],
+                    tools: [ JUnit(pattern: 'tests/xunit.xml') ])
+                )
+            }
+        }
     }
 }
 
