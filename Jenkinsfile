@@ -55,5 +55,12 @@ pipeline {
             }
         }
     }
+
+    post {
+       always {
+           archiveArtifacts artifacts: '**/target/*.zip', fingerprint: true
+           archiveArtifacts artifacts: '**/active-resources/*', fingerprint: true
+       }
+    }
 }
 
