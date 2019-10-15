@@ -1,7 +1,6 @@
 pipeline {
     parameters {
-        string(defaultValue: 'demo1337', description: '', name: 'APIGEE_ORG', trim: false)
-        string(defaultValue: 'test', description: '', name: 'APIGEE_ENV', trim: false)
+       choice(name: 'env', choices: ['test', 'prod'], description: 'Pick environment')
     }
 
     agent {
@@ -10,6 +9,7 @@ pipeline {
 
     environment {
        APIGEE_CREDS = credentials('apigee')
+       HOME = '.'
     }
 
     stages {
@@ -41,7 +41,7 @@ pipeline {
 
         stage('build') {
             steps {
-                sh "mvn -ntp install -Ptest -Dorg=${params.APIGEE_ORG} -Denv=${params.APIGEE_ENV} -Dusername=${APIGEE_CREDS_USR} -Dpassword=${APIGEE_CREDS_PSW} -Dprefix=${env.APIGEE_PREFIX} -DAPIGEE_BUILD_DESC='${env.APIGEE_BUILD_DESC}'"
+                sh "mvn -ntp install -P${params.env} -Dusername=${APIGEE_CREDS_USR} -Dpassword=${APIGEE_CREDS_PSW} -Dprefix=${env.APIGEE_PREFIX} -DAPIGEE_BUILD_DESC='${env.APIGEE_BUILD_DESC}'"
             }
         }
 
@@ -49,18 +49,10 @@ pipeline {
             steps {
                 dir('tests') {
                     sh "npm install"
-                    sh "npm run tests"
+                    sh "npm run test"
+                    junit 'xunit.xml'
                 }
             }
-        }
-    }
-
-     post {
-        always{
-            xunit (
-                thresholds: [ skipped(failureThreshold: '0'), failed(failureThreshold: '0') ],
-                tools: [ JUnit(pattern: 'tests/xunit.xml') ]
-            )
         }
     }
 }
