@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<APIProxy revision="2" name="external-idp-demo">
+<APIProxy revision="5" name="@name_prefix@external-idp-demo">
     <Basepaths>/v1/idp</Basepaths>
     <ConfigurationVersion majorVersion="4" minorVersion="0"/>
     <CreatedAt>1558606057043</CreatedAt>
     <CreatedBy>defaultUser</CreatedBy>
     <Description>@APIGEE_BUILD_DESC@</Description>
-    <DisplayName>graphql-oauth</DisplayName>
+    <DisplayName>external-idp-demo</DisplayName>
     <LastModifiedAt>1558609887607</LastModifiedAt>
     <LastModifiedBy>@username@</LastModifiedBy>
     <ManifestVersion>SHA-512:3de0abe751eef94de767fa9d96b888340baeb309d1144dcaab61adb2761f0255f90b579f5abc8d8846edabb14c3ab49dced34569bb6a549584f59e54167e65d3</ManifestVersion>
@@ -23,7 +23,6 @@
         <Policy>JS-ProcessTokenResponse</Policy>
         <Policy>JS-ReformatScopes</Policy>
         <Policy>JS-SetIdpTokenUrl</Policy>
-        <Policy>JS-SetRegistrationUrl</Policy>
         <Policy>JS-SetTargetUrl</Policy>
         <Policy>KVM-GetIdpCreds</Policy>
         <Policy>KVM-GetIdpMetadata</Policy>
@@ -60,7 +59,6 @@
         <Resource>jsc://JS-ProcessTokenResponse.js</Resource>
         <Resource>jsc://JS-ReformatScopes.js</Resource>
         <Resource>jsc://JS-SetIdpTokenUrl.js</Resource>
-        <Resource>jsc://JS-SetRegistrationUrl.js</Resource>
         <Resource>jsc://JS-SetTargetUrl.js</Resource>
     </Resources>
     <Spec></Spec>

@@ -28,45 +28,44 @@
                 <artifactId>groovy-maven-plugin</artifactId>
                 <version>2.1</version>
                 <executions>
-
-
                     <execution>
+                        <id>package-setup-prefixes</id>
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>execute</goal>
                         </goals>
-                        <configuration>
-                            <properties>
-
-                            </properties>
-                            <source>
-                                def prefix = session.userProperties['prefix'];
-                                def basepath_prefix;
-                                def name_prefix;
-
-                                if (!prefix?.trim()) {
-                                    prefix = ""
-                                    basepath_prefix = ""
-                                    name_prefix = ""
-                                } else {
-                                    prefix = prefix.replaceAll('/', '-');
-                                    basepath_prefix = "/" + prefix;
-                                    name_prefix = prefix + "-"
-                                }
-
-                                project.properties.basepath_prefix = basepath_prefix;
-                                project.properties.name_prefix = name_prefix;
-
-                                println("*****************************************")
-                                println("\tprefix: " + prefix);
-                                println("\tbasepath_prefix: " + basepath_prefix);
-                                println("\tname_prefix: " + name_prefix);
-                                println("*****************************************")
-
-                            </source>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <properties>
+
+                    </properties>
+                    <source>
+                        def prefix = session.userProperties['prefix'];
+                        def basepath_prefix;
+                        def name_prefix;
+
+                        if (!prefix?.trim()) {
+                            prefix = ""
+                            basepath_prefix = ""
+                            name_prefix = ""
+                        } else {
+                            prefix = prefix.replaceAll('/', '-');
+                            basepath_prefix = "/" + prefix;
+                            name_prefix = prefix + "-"
+                        }
+
+                        project.properties.basepath_prefix = basepath_prefix;
+                        project.properties.name_prefix = name_prefix;
+
+                        println("*****************************************")
+                        println("\tprefix: " + prefix);
+                        println("\tbasepath_prefix: " + basepath_prefix);
+                        println("\tname_prefix: " + name_prefix);
+                        println("*****************************************")
+
+                    </source>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -182,7 +181,39 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-test-resources</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <overwrite>true</overwrite>
+                            <encoding>utf8</encoding>
+                            <outputDirectory>${basedir}/tests/active-resources</outputDirectory>
+                            <useDefaultDelimiters>false</useDefaultDelimiters>
+                            <delimiters>
+                                <delimiter>@</delimiter>
+                            </delimiters>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/tests/original-resources</directory>
+                                    <includes>
+                                        <include>**</include>
+                                    </includes>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+
     </build>
     <profiles>
         <profile>
@@ -191,8 +222,8 @@
                 <apigee.profile>test</apigee.profile>
                 <apigee.hosturl>https://api.enterprise.apigee.com</apigee.hosturl>
                 <apigee.apiversion>v1</apigee.apiversion>
-                <apigee.org>${org}</apigee.org>
-                <apigee.env>${env}</apigee.env>
+                <apigee.org>demo1337</apigee.org>
+                <apigee.env>test</apigee.env>
                 <apigee.config.options>sync</apigee.config.options>
                 <apigee.config.dir>${basedir}/target/resources/edge</apigee.config.dir>
                 <apigee.options>override</apigee.options>
@@ -201,6 +232,21 @@
 <!--                <apigee.bearer>${bearer}</apigee.bearer>-->
 <!--                <apigee.tokenurl>https://demo1337-keycloak.login.apigee.com/oauth/token</apigee.tokenurl>-->
 <!--                <apigee.authtype>oauth</apigee.authtype>-->
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <apigee.profile>prod</apigee.profile>
+                <apigee.hosturl>https://api.enterprise.apigee.com</apigee.hosturl>
+                <apigee.apiversion>v1</apigee.apiversion>
+                <apigee.org>demo1337</apigee.org>
+                <apigee.env>prod</apigee.env>
+                <apigee.config.options>sync</apigee.config.options>
+                <apigee.config.dir>${basedir}/target/resources/edge</apigee.config.dir>
+                <apigee.options>override</apigee.options>
+                <apigee.username>${username}</apigee.username>
+                <apigee.password>${password}</apigee.password>
             </properties>
         </profile>
     </profiles>

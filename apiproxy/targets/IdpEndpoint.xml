@@ -5,7 +5,7 @@
     <PreFlow name="PreFlow">
         <Request>
             <Step>
-                <Name>JS-SetTargetUrl</Name>
+                <Name>AM-SetTargetURL</Name>
             </Step>
         </Request>
         <Response/>

@@ -1,0 +1,4 @@
+active-resources
+node_modules
+package-lock.json
+xunit.xml

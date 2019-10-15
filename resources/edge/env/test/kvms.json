@@ -2,22 +2,14 @@
   {
     "entry": [
       {
-        "name": "idp-auth-url",
-        "value": "https://dev-548285.okta.com/oauth2/default/v1/authorize"
+        "name": "idp-metadata-url",
+        "value": "https://dev-548285.okta.com/oauth2/default/.well-known/openid-configuration"
       },
       {
-        "name": "idp-registration-auth",
-        "value": "SSWS 00zNVmfgskxR55IY6LNWSgIlGmYJpqANqNtlc69Cc0"
-      },
-      {
-        "name": "idp-registration-url",
-        "value": "https://dev-548285.okta.com/oauth2/v1/clients"
-      },
-      {
-        "name": "idp-token-url",
-        "value": "https://dev-548285.okta.com/oauth2/default/v1/token"
+        "name": "idp-registration-authorization",
+        "value": "SSWS 00G6OjJYMTmgEH7GxGnicNq6qDUCWTmxayaWnNAXAy"
       }
     ],
-    "name": "idp-metadata"
+    "name": "@name_prefix@external-idp-metadata"
   }
 ]

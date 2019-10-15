@@ -6,10 +6,13 @@
         <Name>private.edge_authorization</Name>
         <Ref>request.header.Authorization</Ref>
     </AssignVariable>
+    <AssignVariable>
+        <Name>request-url</Name>
+        <Ref>registration_endpoint</Ref>
+    </AssignVariable>
     <Set>
         <Headers>
-            <!--<Header name="Authorization">{idp-registration-token-type} {private.idp-registration-token}</Header>-->
-            <Header name="Authorization">{idp-registration-auth}</Header>
+            <Header name="Authorization">{idp-registration-authorization}</Header>
             <Header name="Accept">application/json</Header>
             <Header name="Content-Type">application/json</Header>
         </Headers>

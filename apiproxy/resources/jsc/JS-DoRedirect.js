@@ -5,13 +5,16 @@ var scope = context.getVariable('request.queryparam.scope');
 var code = context.getVariable('oauthv2authcode.OA-GenerateAuthCode.code');
 
 //info to store in the cache
+context.setVariable("authCodeCacheKey", client_id);
+
+
 context.setVariable("authCodeCache", JSON.stringify({
     code: code,
     scope: scope,
 }));
 
 //url to redirect user to
-var url = context.getVariable('idp-auth-url') + "?client_id="+client_id+"&state="+state+"&scope="+scope+"&redirect_uri="+redirect_uri+"&response_type=code";
+var url = context.getVariable('authorization_endpoint') + "?client_id="+client_id+"&state="+state+"&scope="+scope+"&redirect_uri="+redirect_uri+"&response_type=code";
  
 context.setVariable("response.header.location", url);
 context.setVariable("response.status.code", 307);
