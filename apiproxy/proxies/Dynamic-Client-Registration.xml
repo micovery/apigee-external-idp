@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ProxyEndpoint name="Dynamic-Client-Registration">
-    <Description>This was added during a demo</Description>
+    <Description/>
     <FaultRules>
         <FaultRule name="SC-Error">
             <Condition>(servicecallout.SC-IdpToken.failed is true) or (servicecallout.SC-EdgeCreateApp.failed is true) or (servicecallout.SC-DeleteNewKey.failed is true) or (servicecallout.SC-IdpClientRegistration.failed is true) or (servicecallout.SC-SyncEdgeCreds.failed is true) or (servicecallout.SC-SetAPIProds.failed is true)</Condition>
@@ -23,7 +23,13 @@
                 <Name>KVM-GetIdpMetadata</Name>
             </Step>
             <Step>
-                <Name>KVM-GetIdpCreds</Name>
+                <Name>AM-TransformURL</Name>
+            </Step>
+            <Step>
+                <Name>SC-GetIdpMetadata</Name>
+            </Step>
+            <Step>
+                <Name>JS-ProcessOpenIdMetadata</Name>
             </Step>
         </Request>
         <Response/>
@@ -33,14 +39,11 @@
         <Response/>
     </PostFlow>
     <Flows>
-        <Flow name="POST /*/apps">
+        <Flow name="POST /">
             <Description>Dynamic Client Registration</Description>
             <Request>
                 <Step>
-                    <Name>EV-GetDeveloper</Name>
-                </Step>
-                <Step>
-                    <Name>JS-SetRegistrationUrl</Name>
+                    <Name>EV-GetAppParams</Name>
                 </Step>
                 <Step>
                     <Name>AM-SetRegistrationAuth</Name>
@@ -69,7 +72,7 @@
                     <Name>AM-ClientRegRes</Name>
                 </Step>
             </Response>
-            <Condition>(proxy.pathsuffix MatchesPath "/*/apps") and (request.verb = "POST")</Condition>
+            <Condition>(proxy.pathsuffix MatchesPath "/") and (request.verb = "POST") and (content_type = "application/json")</Condition>
         </Flow>
         <Flow name="BadMethod">
             <Description/>
@@ -89,7 +92,7 @@
                 </Step>
             </Request>
             <Response/>
-            <Condition>(request.verb = "POST") and !(content_type = "application/x-www-form-urlencoded")</Condition>
+            <Condition>(request.verb = "POST") and !(content_type = "application/json")</Condition>
         </Flow>
         <Flow name="BadRequest">
             <Description/>
@@ -102,7 +105,7 @@
         </Flow>
     </Flows>
     <HTTPProxyConnection>
-        <BasePath>@basepath_prefix@/v1/idp/developers</BasePath>
+        <BasePath>@basepath_prefix@/v1/idp/apps</BasePath>
         <Properties/>
         <VirtualHost>secure</VirtualHost>
     </HTTPProxyConnection>

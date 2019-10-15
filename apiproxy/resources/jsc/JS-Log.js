@@ -1,2 +1,2 @@
 
-print('authCodeCache: ' + context.getVariable('authCodeCache'));
+print('response.content: ' + context.getVariable('response.content'));

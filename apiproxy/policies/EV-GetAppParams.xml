@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="EV-GetAppParams">
+    <DisplayName>EV-GetAppParams</DisplayName>
+    <Properties/>
+    <JSONPayload>
+        <Variable name="developer_id" type="string">
+            <JSONPath>$.developer_id</JSONPath>
+        </Variable>
+        <Variable name="api_products" type="string">
+            <JSONPath>$.api_products</JSONPath>
+        </Variable>
+        <Variable name="client_name" type="string">
+            <JSONPath>$.client_name</JSONPath>
+        </Variable>
+        <Variable name="redirect_uri" type="string">
+            <JSONPath>$.redirect_uri</JSONPath>
+        </Variable>
+    </JSONPayload>
+    <Source clearPayload="false">request</Source>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</ExtractVariables>

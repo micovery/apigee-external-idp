@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AM-TransformURL">
+    <DisplayName>AM-TransformURL</DisplayName>
+    <Properties/>
+    <AssignVariable>
+        <Name>path-regex</Name>
+        <Template>^.*\.(com|org|net)</Template>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>host-regex</Name>
+        <Template><![CDATA[(https:\/\/|(?<=\.com|\.org|.net).*)]]></Template>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>idp-metadata-url-path</Name>
+        <Template>{replaceAll(idp-metadata-url,path-regex,'')}</Template>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>idp-metadata-url-host</Name>
+        <Template>{replaceAll(idp-metadata-url,host-regex,'')}</Template>
+    </AssignVariable>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

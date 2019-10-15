@@ -22,6 +22,15 @@
             <Step>
                 <Name>KVM-GetIdpMetadata</Name>
             </Step>
+            <Step>
+                <Name>AM-TransformURL</Name>
+            </Step>
+            <Step>
+                <Name>SC-GetIdpMetadata</Name>
+            </Step>
+            <Step>
+                <Name>JS-ProcessOpenIdMetadata</Name>
+            </Step>
         </Request>
         <Response/>
     </PreFlow>
@@ -63,7 +72,7 @@
                     <Name>JS-DoRedirect</Name>
                 </Step>
                 <Step>
-                    <Name>PC-SaveAuthCode</Name>
+                    <Name>KVM-WriteAuthCode</Name>
                 </Step>
             </Response>
         </Flow>
@@ -79,13 +88,13 @@
                     <Name>RF-BadRequest</Name>
                 </Step>
                 <Step>
-                    <Name>LC-GetAuthCode</Name>
+                    <Name>KVM-ReadAuthCode</Name>
                 </Step>
                 <Step>
                     <Name>JS-ProcessAuthCodeCache</Name>
                 </Step>
                 <Step>
-                    <Name>JS-SetIdpTokenUrl</Name>
+                    <Name>AM-SetIdpTokenURL</Name>
                 </Step>
             </Request>
             <Response>
@@ -108,7 +117,7 @@
                     <Name>VerifyAPIKey</Name>
                 </Step>
                 <Step>
-                    <Name>JS-SetIdpTokenUrl</Name>
+                    <Name>AM-SetIdpTokenURL</Name>
                 </Step>
             </Request>
             <Response>
@@ -117,6 +126,32 @@
                 </Step>
                 <Step>
                     <Name>OA-GenerateAccessTokenPass</Name>
+                </Step>
+                <Step>
+                    <Name>JS-ModifyOAuthResponse</Name>
+                </Step>
+            </Response>
+        </Flow>
+        <Flow name="POST /token (client_credentials)">
+            <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.verb = "POST") and (grant_type = "client_credentials") and (content_type = "application/x-www-form-urlencoded")</Condition>
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>VerifyAPIKey</Name>
+                </Step>
+                <Step>
+                    <Name>AM-SetIdpTokenURL</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>JS-ProcessTokenResponse</Name>
+                </Step>
+                <Step>
+                    <Name>OA-GenerateAccessTokenCC</Name>
+                </Step>
+                <Step>
+                    <Name>js-log-content-response</Name>
                 </Step>
                 <Step>
                     <Name>JS-ModifyOAuthResponse</Name>
@@ -179,7 +214,7 @@
         <VirtualHost>secure</VirtualHost>
     </HTTPProxyConnection>
     <RouteRule name="IdpRoute">
-        <Condition> (grant_type = "authorization_code")  or  (grant_type = "password") </Condition>
+        <Condition> (grant_type = "authorization_code")  or  (grant_type = "password") or  (grant_type = "client_credentials")</Condition>
         <TargetEndpoint>IdpEndpoint</TargetEndpoint>
     </RouteRule>
     <RouteRule name="noroute"/>

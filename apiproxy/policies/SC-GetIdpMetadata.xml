@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ServiceCallout async="false" continueOnError="false" enabled="true" name="SC-GetIdpMetadata">
+    <DisplayName>SC-GetIdpMetadata</DisplayName>
+    <Properties/>
+    <Request clearPayload="true" variable="newRequest">
+        <Set>
+            <Verb>GET</Verb>
+            <Headers>
+                <Header name="Accept">application/json</Header>
+            </Headers>
+            <Path>{idp-metadata-url-path}</Path>
+        </Set>
+        <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+    </Request>
+    <Response>idpMetadataRes</Response>
+    <HTTPTargetConnection>
+        <Properties/>
+        <URL>https://{idp-metadata-url-host}</URL>
+    </HTTPTargetConnection>
+</ServiceCallout>
