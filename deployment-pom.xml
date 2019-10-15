@@ -234,6 +234,21 @@
 <!--                <apigee.authtype>oauth</apigee.authtype>-->
             </properties>
         </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <apigee.profile>prod</apigee.profile>
+                <apigee.hosturl>https://api.enterprise.apigee.com</apigee.hosturl>
+                <apigee.apiversion>v1</apigee.apiversion>
+                <apigee.org>demo1337</apigee.org>
+                <apigee.env>prod</apigee.env>
+                <apigee.config.options>sync</apigee.config.options>
+                <apigee.config.dir>${basedir}/target/resources/edge</apigee.config.dir>
+                <apigee.options>override</apigee.options>
+                <apigee.username>${username}</apigee.username>
+                <apigee.password>${password}</apigee.password>
+            </properties>
+        </profile>
     </profiles>
     <dependencies>
         <dependency>
