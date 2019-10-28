@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Sample Comment -->
 <ProxyEndpoint name="OAuth-Endpoints">
     <Description/>
     <FaultRules>
